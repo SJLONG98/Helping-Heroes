@@ -15,7 +15,7 @@
 		if(empty(trim($_POST["email"]))) {
 			$email_err = "Please enter an email.";
 		} else {
-			$sql = "SELECT * From users WHERE EMAIL = ?";
+			$sql = "SELECT * From user WHERE email = '?'";
 			if($stmt = mysqli_prepare($link, $sql)) {
 				mysqli_stmt_bind_param($stmt,"s",$param_email);
 				$param_email = trim($_POST["email"]);
@@ -36,7 +36,7 @@
 			mysqli_stmt_close($stmt);
 		}
 		
-		if(empty(trim($_POST["userType"]))) {
+		if((trim($_POST["userType"])) == "#") {
 			$userType_err = "Please select your role.";
 		} else {
 			$userType = trim($_POST["userType"]);
@@ -58,17 +58,31 @@
 				$confirm_password_err = 'Password did not match.';
 			}
 		}
+		
+		if((trim($_POST["secQuestion"])) == "#") {
+			$secQuestion_err = "Please select your security question.";
+		} else {
+			$secQuestion = trim($_POST["secQuestion"]);
+		}
+		
+		if(empty(trim($_POST["secAnswer"]))) {
+			$secAnswer_err = "Please select your security answer.";
+		} else {
+			$secAnswer = trim($_POST["secAnswer"]);
+		}
 
-		if(empty($userID_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
-			$addUser = "INSERT INTO USERS (USERNAME, FNAME, SNAME, EMAIL, PASSWORD) VALUES (?, ?, ?, ?, ?)";
+		if(empty($userID_err) && empty($email_err) && empty($userType_err) && empty($password_err) && empty($confirm_password_err) && empty($secQuestion_err) && empty($secAnswer_err)) {
+			$addUser = "INSERT INTO user (userID, email, password, userType, secQuestion, secAnswer) VALUES (?, ?, ?, ?, ?, ?)";
 
 			if($add = mysqli_prepare($link, $addUser)) {
-				mysqli_stmt_bind_param($add, "sssss", $param_uname, $param_fname, $param_sname, $param_email, $param_password);
-				$param_uname = $uname;
-				$param_fname = $fname;
-				$param_sname = $sname;
+				mysqli_stmt_bind_param($add, "ssssss", $param_userID, $param_email, $param_password, $param_userType, $param_secQuestion, $param_secAnswer);
+				$param_userID = $userID;
 				$param_email = $email;
 				$param_password = password_hash($password, PASSWORD_DEFAULT);
+				$param_userType = $userType;
+				$param_secQuestion = $secQuestion;
+				$param_secAnswer = $secAnswer;
+				
 				if(mysqli_stmt_execute($add)) {
 					header("location: CreateAccount.php");
 				}
@@ -105,9 +119,9 @@
 				<h4>Please fill out the following fields and press submit to create your account.</h4>
 				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 					<div>
-						<label for="username">Username</label>
+						<label for="userID">Username</label>
 						<br>
-						<input type="text" id="uname" name="uname" placeholder=" JohnSmith95">
+						<input type="text" id="userID" name="userID" placeholder=" JohnSmith95">
 						<?php if (empty($userID_err)) { 
 								} else { ?>
 						<p><?php echo $userID_err; ?></p>
@@ -128,7 +142,7 @@
 						<label for="userType">User Type</label>
 						<br>
 							<select type="text" id="userType" name="userType">
-								<option value="">Please choose a role...</option>
+								<option value="#">Please choose a role...</option>
 								<option value="2">Volunteer</option>
 								<option value="3">Key Worker</option>
 							</select>
@@ -157,12 +171,12 @@
 					<div>
 						<label for="secQuestion">Security Question</label>
 						<br>
-							<select type="text" id="secQuestion" name="secQuestion">
-								<option value="">Please choose a question...</option>
-								<option value="1">What was your first pet's name?</option>
-								<option value="2">What is your favourite colour?</option>
-								<option value="3">Where was your first holiday?</option>
-							</select>
+						<select type="text" id="secQuestion" name="secQuestion">
+							<option value="#">Please choose a question...</option>
+							<option value="1">What was your first pet's name?</option>
+							<option value="2">What is your favourite colour?</option>
+							<option value="3">Where was your first holiday?</option>
+						</select>
 					</div>
 					
 					<div>
