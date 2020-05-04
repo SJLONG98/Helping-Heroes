@@ -1,14 +1,16 @@
 <?php
-	// Session check and connection file inclusion
-    if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    }
+	// Session start and connection file inclusion
+	session_start();
+
+	if ($_SESSION['userType'] != 1) {
+		header("location: index.php");
+	}
 	include("connection.php");
 	
-	// Sets up query for all jobs which are in pending status
-	$getJobs = "SELECT * FROM jobs WHERE pairedUserId is not null and isApproved is null";
-	$result = mysqli_query($link, $getJobs);
+	// Sets up query for all users which have a pending vetted status
+	$getUsers = "SELECT * FROM user WHERE isVetted is null AND vettingFileName is not null";
+	$result = mysqli_query($link, $getUsers);
+
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +23,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="icon" href="#"/>
-		<title>All Jobs</title>
+		<title>Admin</title>
 	</head>
 	<body>
 		<?php 
@@ -30,20 +32,24 @@
 		?>
 		<div id="site_content">
 			<div id="content">
-				<h2>Welcome to Helping Heroes</h2>
+				<h2>Approve or Deny Users</h2>
 				<?php while($row = mysqli_fetch_array($result)){ ?>
 					<div class="job">
 						<div class="job_inf">
-							<h3><?php echo $row[2]; ?></h3>
+							<h3><?php echo $row[0]; ?></h3>
+							<a href="/helpingheroes/<?php echo $row[11]; ?>" download>Click here to download vetting file</a>
 						</div>
 						<div class="job_btn">
-							<form action ="approveDenyJob.php" method = "post">
-								<button type='submit' name='approve' value=<?php echo "'{$row[10]}'" ?>>Approve</button>
-								<button type='submit' name='deny' value=<?php echo "'{$row[10]}'" ?>>Deny</button>
+							<form action ="approveDenyUser.php" method = "post">
+								<button type='submit' name='approve' value=<?php echo "'{$row[0]}'" ?>>Approve</button>
+								<button type='submit' name='deny' value=<?php echo "'{$row[0]}'" ?>>Deny</button>
 							</form>
 						</div>
 					</div>
 				<?php }; ?>
+			</div>
+			<div id="sidebar_content">
+				<a href="AdminLists.php" class="button">Aproval List</a>
 			</div>
 		</div>
 		<script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>

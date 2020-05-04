@@ -1,6 +1,10 @@
 <?php
 	session_start();
-	include("connection.php");
+	
+	if(isset($_SESSION["login_user"])) {
+		header("location: index.php");
+	}
+	include_once("connection.php");  
 
 	$userID = $email = $userType = $password = $confirm_password = $secQuestion = $secAnswer = "";
 	$userID_err = $email_err = $userType_err = $password_err = $confirm_password_err = $secQuestion_err = $secAnswer_err = "";
@@ -97,6 +101,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- The head section currently contains details to make the software viewable
+				Further changes are needed for the final version -->
 		<link rel="icon" href="#"/>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -106,15 +112,14 @@
 	</head>
 	<body>
 		<?php 
-		if(isset($_SESSION['login_user'])){
-			include("LoggedInNavBar.php");
-		}
-		else {
-			include("LoginNavBar.php");
-		}
+			// Necessary reference to include our dynamic navbar
+			include("Navbar.php");
 		?>
 		<div id="site_content">
 			<div id="content">
+				<!-- This div contains a form to create an account for the user given all fields
+						are filled in and the confirm password is equal to the password.
+					 The form submits to the code in the php code at the top of the script.-->
 				<h2>Create Account</h2>
 				<h4>Please fill out the following fields and press submit to create your account.</h4>
 				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -194,6 +199,9 @@
 				</form>
 			</div>
 			<div class="content">
+				<!-- This div contains a form login to the website through the database if all fields
+						have been filled in correctly.
+					 The form submits to the code in the php code in the login.php script.-->
 				<h2>Login</h2>
 				<h4>Please enter your email and password to login.</h4>
 				<form action ="login.php" method = "post">
