@@ -1,9 +1,20 @@
-Files:
-- index/landing
-- login & create
-- User
-- Volunteer List
-- Key Worker List
-- Admin List
-- Create Request
-- About Us
+- Inspect on webpage currently shows anyone the scripts used for the website - this is something we need to disallow
+- Sort out uploading Date format fields to the database
+- Uploading a file seems to not forward the user back to a webpage and stays on uploadFile.php; this occurs even with a successful upload
+- Add image uploads for accounts (and maybe jobs)
+- Match Postcodes for users based on job distance data
+  - MVP will be scaled on area, district and subdistrict
+- Postcode needs to be verified as real
+  - MVP will use a table sourced from free database from online (Joe has this stored locally)
+- Address:Postcode matchup (could be added to MVP)
+- Apply timescale rules to jobs
+- Basic design for the website
+  - Colour scheme, fonts and accessibility
+  - Bootstrap or similar for responsive webpages
+- User being notified on account/ job updates
+  - MVP will have an indication on the User.php page
+  - MVP could have email notifications
+- Ensure high security standards
+  - Prevent all SQL Injections
+  - Hide variable access from users
+- Password reset capabilities
