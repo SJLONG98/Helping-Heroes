@@ -36,6 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	$address = trim($_POST["address"]);
 	$postcode = trim($_POST["postcode"]);
 	$phoneNumber = trim($_POST["phoneNumber"]);
+	$dob = trim($_POST["dob"]);
 	$updateAccount = "UPDATE user SET";
 
 	if(!empty($address)) {$updateAccount .= " address = \"{$address}\",";};
@@ -44,14 +45,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if(!empty($phoneNumber)) {$updateAccount .= " phoneNumber = \"{$phoneNumber}\",";};
 
-	if(!empty($dob)) {$updateAccount .= " dob = \"{$dob}\",";}
+	if(!empty($dob)) {$updateAccount .= " dob = \"{$dob}\" ";}
 	
 	if($updateAccount != "UPDATE user SET") {
 		$updateAccount = substr($updateAccount ,0,-1);
 		$updateAccount .= " WHERE userID = \"{$userID}\"";
 	}
 
-	if(!empty($updateAccount)) {
+	if(!empty($updateAccount) && !($updateAccount == "UPDATE user SET")) {
 
 		if($update = mysqli_prepare($link, $updateAccount)) {
 			if(mysqli_stmt_execute($update)) {
@@ -61,8 +62,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 				echo $update->error;
 			}
 		}
-		echo $updateAccount;
 	}
+	
+	echo $updateAccount;
 
 
 }
@@ -145,7 +147,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 					<div>
 						<label for="dob">Date of Birth</label>
 						<br>
-						<input type="text" id="dob" name="dob" placeholder=" 01-01-2000" readonly>
+						<input type="date" name="dob" value="<?php echo date('Y-m-d'); ?>">
 						<?php if (empty($dob_err)) { 
 								} else { ?>
 						<p><?php echo $dob_err; ?></p>
