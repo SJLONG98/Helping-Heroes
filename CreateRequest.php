@@ -64,10 +64,10 @@
 
 		// If there are no errors with the POST methods then insert the job reuqest
 		//  into the database
-		if(empty($requestTitle_err) && empty($requestType_err) && empty($furtherDetails_err) && empty($distance_err) && empty($duration_err)) {
-			$addJob = "INSERT INTO jobs (userID, userType, jobTitle, jobType, jobDescription, distance, duration) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		if(empty($requestTitle_err) && empty($requestType_err) && empty($furtherDetails_err) && empty($distance_err) && empty($duration_err) && empty($startDate_err)) {
+			$addJob = "INSERT INTO jobs (userID, userType, jobTitle, jobType, jobDescription, distance, duration, startDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			if($add = mysqli_prepare($link, $addJob)) {
-				mysqli_stmt_bind_param($add, "sssssss", $param_userID, $param_userType, $param_jobTitle, $param_jobType, $param_jobDescription, $param_distance, $param_duration);
+				mysqli_stmt_bind_param($add, "ssssssss", $param_userID, $param_userType, $param_jobTitle, $param_jobType, $param_jobDescription, $param_distance, $param_duration, $param_startDate);
 				$param_userID = $userID;
 				$param_userType = $userType;
 				$param_jobTitle = $requestTitle;
@@ -75,6 +75,7 @@
 				$param_jobDescription = $furtherDetails;
 				$param_distance = $distance;
 				$param_duration = $duration;
+				$param_startDate = $startDate;
 				
 				if(mysqli_stmt_execute($add)) {
 					header("location: CreateRequest.php");
@@ -166,10 +167,10 @@
 				<div>
 					<label for="startDate">Start Date</label>
 					<br>
-					<input type="text" id="startDate" name="startDate" placeholder=" ">
-					<?php if (empty($userID_err)) { 
+					<input type="date" name="startDate" value="<?php echo date('Y-m-d'); ?>">
+					<?php if (empty($startDate_err)) { 
 							} else { ?>
-					<p><?php echo $userID_err; ?></p>
+					<p><?php echo $startDate_err; ?></p>
 					<?php } ?>
 				</div>
 				
