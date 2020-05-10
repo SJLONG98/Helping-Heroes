@@ -11,7 +11,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	// Setup and check that the file passed in can be uploaded to the server
 	$target_dir = "helpingheroes/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-	echo $target_file;
 	$uploadOk = 1;
 	$fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	// Check if the file passed is the right type (pdf files)
@@ -22,14 +21,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	// If the file can be uploaded then attempt the upload
 	if ($uploadOk == 0) {
 	} else {
-		echo $_FILES["fileToUpload"]["tmp_name"];
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-			echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 			$file = basename( $_FILES["fileToUpload"]["name"]);
-			echo "FILE=".$file;
 		} else {
 			// If the file can't be uploaded then return to edit account page
-			echo "Sorry, there was an error uploading your file.";
 			header("location: EditAccount.php");
 		}
 	}
@@ -50,9 +45,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo $update->error;
 		}
 	}
-	mysqli_close($link);
+	
 	header("location: EditAccount.php");
+	mysqli_close($link);
 }
 // Otherwise do nothing
+header("location: EditAccount.php");
 ?>
-
