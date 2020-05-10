@@ -1,6 +1,5 @@
 TODO:
 - Inspect on webpage currently shows anyone the scripts used for the website - this is something we need to disallow
-- Sort out uploading Date format fields to the database
 - Add image uploads for accounts (and maybe jobs)
 - Match Postcodes for users based on job distance data
   - MVP will be scaled on area, district and subdistrict
@@ -22,3 +21,4 @@ TODO:
 DONE:
 - Uploading a file seems to not forward the user back to a webpage and stays on uploadFile.php; this occurs even with a successful upload
   - This was fixed by removing all outputs in the file outside of headers (removal of `echo` commands)
+- Sort out uploading Date format fields to the database
