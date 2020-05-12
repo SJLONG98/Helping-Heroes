@@ -106,6 +106,7 @@
 		<link rel="icon" href="#"/>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Helping Heroes: Account</title>
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
@@ -115,114 +116,122 @@
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
 		?>
-		<div id="site_content">
-			<div id="content">
+		<div class="container-fluid text-center">    
+			<div class="row content">
+				<div class="col-sm-2 sidenav"></div>
 				<!-- This div contains a form to create an account for the user given all fields
 						are filled in and the confirm password is equal to the password.
 					 The form submits to the code in the php code at the top of the script.-->
+				<div class="col-sm-4 text-left">
 				<h2>Create Account</h2>
 				<h4>Please fill out the following fields and press submit to create your account.</h4>
-				<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-					<div>
-						<label for="userID">Username</label>
-						<br>
-						<input type="text" id="userID" name="userID" placeholder=" JohnSmith95">
-						<?php if (empty($userID_err)) { 
-								} else { ?>
-						<p><?php echo $userID_err; ?></p>
-						<?php } ?>
-					</div>
+					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+						<div>
+							<label for="userID">Username</label>
+							<br>
+							<input type="text" id="userID" name="userID" placeholder=" JohnSmith95">
+							<?php if (empty($userID_err)) { 
+									} else { ?>
+							<p><?php echo $userID_err; ?></p>
+							<?php } ?>
+						</div>
 
-					<div>
-						<label for="email">Email Address</label>
-						<br>
-						<input type="text" id="email" name="email" placeholder=" johnsmith1995@gmail.com">
-						<?php if (empty($email_err)) { 
-								} else { ?>
-						<p><?php echo $email_err; ?></p>
-						<?php } ?>
-					</div>
-					
-					<div>
-						<label for="userType">User Type</label>
-						<br>
-							<select type="text" id="userType" name="userType">
-								<option value="#">Please choose a role...</option>
-								<option value="2">Volunteer</option>
-								<option value="3">Key Worker</option>
+						<div>
+							<label for="email">Email Address</label>
+							<br>
+							<input type="text" id="email" name="email" placeholder=" johnsmith1995@gmail.com">
+							<?php if (empty($email_err)) { 
+									} else { ?>
+							<p><?php echo $email_err; ?></p>
+							<?php } ?>
+						</div>
+						
+						<div>
+							<label for="userType">User Type</label>
+							<br>
+								<select type="text" id="userType" name="userType">
+									<option value="#">Please choose a role...</option>
+									<option value="2">Volunteer</option>
+									<option value="3">Key Worker</option>
+								</select>
+						</div>
+						
+						<div>
+							<label for="password">Password</label>
+							<br>
+							<input type="text" id="password" name="password" placeholder="">
+							<?php if (empty($uname_err)) { 
+									} else { ?>
+							<p><?php echo $password_err; ?></p>
+							<?php } ?>
+						</div>
+
+						<div>
+							<label for="confirmPassword">Confirm Password</label>
+							<br>
+							<input type="text" id="confirmPassword" name="confirmPassword" placeholder="">
+							<?php if (empty($uname_err)) { 
+									} else { ?>
+							<p><?php echo $confirm_password_err; ?></p>
+							<?php } ?>
+						</div>
+						
+						<div>
+							<label for="secQuestion">Security Question</label>
+							<br>
+							<select type="text" id="secQuestion" name="secQuestion">
+								<option value="#">Please choose a question...</option>
+								<option value="1">What was your first pet's name?</option>
+								<option value="2">What is your favourite colour?</option>
+								<option value="3">Where was your first holiday?</option>
 							</select>
-					</div>
-					
-					<div>
-						<label for="password">Password</label>
+						</div>
+						
+						<div>
+							<label for="secAnswer">Security Answer</label>
+							<br>
+							<input type="text" id="secAnswer" name="secAnswer" placeholder="">
+							<?php if (empty($secAnswer_err)) { 
+									} else { ?>
+							<p><?php echo $secAnswer_err; ?></p>
+							<?php } ?>
+						</div>
+						
 						<br>
-						<input type="text" id="password" name="password" placeholder="">
-						<?php if (empty($uname_err)) { 
-								} else { ?>
-						<p><?php echo $password_err; ?></p>
-						<?php } ?>
-					</div>
-
-					<div>
-						<label for="confirmPassword">Confirm Password</label>
-						<br>
-						<input type="text" id="confirmPassword" name="confirmPassword" placeholder="">
-						<?php if (empty($uname_err)) { 
-								} else { ?>
-						<p><?php echo $confirm_password_err; ?></p>
-						<?php } ?>
-					</div>
-					
-					<div>
-						<label for="secQuestion">Security Question</label>
-						<br>
-						<select type="text" id="secQuestion" name="secQuestion">
-							<option value="#">Please choose a question...</option>
-							<option value="1">What was your first pet's name?</option>
-							<option value="2">What is your favourite colour?</option>
-							<option value="3">Where was your first holiday?</option>
-						</select>
-					</div>
-					
-					<div>
-						<label for="secAnswer">Security Answer</label>
-						<br>
-						<input type="text" id="secAnswer" name="secAnswer" placeholder="">
-						<?php if (empty($secAnswer_err)) { 
-								} else { ?>
-						<p><?php echo $secAnswer_err; ?></p>
-						<?php } ?>
-					</div>
-					
-					<br>
-					<input type="submit" value="Register">    
-				</form>
-			</div>
-			<div class="content">
+						<input type="submit" value="Register">    
+					</form>
+				</div>
+				<div class="col-sm-1 sidenav"></div>
+				<div class="col-sm-3 text-left">
 				<!-- This div contains a form login to the website through the database if all fields
 						have been filled in correctly.
 					 The form submits to the code in the php code in the login.php script.-->
-				<h2>Login</h2>
-				<h4>Please enter your email and password to login.</h4>
-				<form action ="login.php" method = "post">
-					<div>
-						<label for="email">Email</label>
-						<br>
-						<input type="email" name="email" placeholder="Email">
-					</div>
+					<h2>Login</h2>
+					<h4>Please enter your email and password to login.</h4>
+					<form action ="login.php" method = "post">
+						<div>
+							<label for="email">Email</label>
+							<br>
+							<input type="email" name="email" placeholder="Email">
+						</div>
 
-					<div>
-						<label for="password">Password</label>
-						<br>
-						<input type="password" name="password" placeholder="Password">
-						<?php if(isset($_SESSION['Message'])){ ?>
-							<p> <?php echo str_replace('+',' ',$_SESSION['Message']);?> </p>
-						<?php unset($_SESSION['Message']); } ?>
-					</div>
+						<div>
+							<label for="password">Password</label>
+							<br>
+							<input type="password" name="password" placeholder="Password">
+							<?php if(isset($_SESSION['Message'])){ ?>
+								<p> <?php echo str_replace('+',' ',$_SESSION['Message']);?> </p>
+							<?php unset($_SESSION['Message']); } ?>
+						</div>
 
-					<input type="submit" name="submit" value="Login" id="login" onclick="loginFunction()">
-				</form>
+						<input type="submit" name="submit" value="Login" id="login" onclick="loginFunction()">
+					</form>
+					<a href="PasswordReset.php" >
+				</div>
+				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</body>
 </html>

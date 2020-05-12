@@ -55,6 +55,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<link rel="icon" href="#"/>
 		<title>Helping Heroes</title>
 	</head>
@@ -63,36 +64,41 @@
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
 		?>
-		<div id="site_content">
-			<div id="content">
+		<div class="container-fluid text-center">    
+			<div class="row content">
+				<div class="col-sm-2 sidenav"></div>
 				<!-- This div contains the details for a list of all jobs
 						with limits on whether the user is signed in and
 						their user type -->
-				<h2>Welcome to Helping Heroes</h2>
-				<?php while($row = mysqli_fetch_array($result)){ ?>
-					<div class="job">
-						<div class="job_inf">
-							<h3><?php echo $row[2]; ?></h3>
-							<p><?php echo getJobType($row[3]); ?></p>
-							<p><?php echo $row[4]; ?></p>
+				<div class="col-sm-8 text-left">
+					<h2>Welcome to Helping Heroes</h2>
+					<?php while($row = mysqli_fetch_array($result)){ ?>
+						<div class="job">
+							<div class="job_inf">
+								<h3><?php echo $row[2]; ?></h3>
+								<p><?php echo getJobType($row[3]); ?></p>
+								<p><?php echo $row[4]; ?></p>
+							</div>
+							<div class="job_btn">
+								<!-- This div shows a button for logged in users to claim a job
+										and links to login for other users-->
+								<?php if(isset($_SESSION['login_user'])) { ?>
+									<?php if($_SESSION['userType'] != 1) { ?>
+									<form action ="claimJob.php" method = "post">
+										<button type='submit' name='claim' value=<?php echo "'{$row[10]}'" ?> >Claim <?php echo $jobTypeCapital; ?></button>
+									</form>
+									<?php } ?>
+								<?php } else { ?>
+									<a href="CreateAccount.php">Login/Register to claim</a>
+								<?php }; ?>
+							</div>
 						</div>
-						<div class="job_btn">
-							<!-- This div shows a button for logged in users to claim a job
-									and links to login for other users-->
-							<?php if(isset($_SESSION['login_user'])) { ?>
-								<?php if($_SESSION['userType'] != 1) { ?>
-								<form action ="claimJob.php" method = "post">
-									<button type='submit' name='claim' value=<?php echo "'{$row[10]}'" ?> >Claim <?php echo $jobTypeCapital; ?></button>
-								</form>
-								<?php } ?>
-							<?php } else { ?>
-								<a href="CreateAccount.php">Login/Register to claim</a>
-							<?php }; ?>
-						</div>
-					</div>
-				<?php }; ?>
+					<?php }; ?>
+				</div>
+				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
-		<script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</body>
 </html>

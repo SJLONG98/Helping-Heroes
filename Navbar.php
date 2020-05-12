@@ -38,25 +38,30 @@
 	}
 ?>
 
-<div id="header">
-  <div id="logo">
-	<div id="logo_text">
-	  <h1><a href="index.php"><span class="logo_colour">Helping Heroes</span></a></h1>
-	  <h2>Your chance to give something back to our Heroes.</h2>
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="index.php">Helping Heroes</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="index.php">Home</a></li>
+				<?php 
+				if (isset($_SESSION['userType'])) {
+				if($userType == "Admin") {} else if ($userType == "Volunteer") { ?> <li><a href="CreateRequest.php">Create Offer</a></li> <?php } elseif ($userType == "Key Worker") { ?> <li><a href="CreateRequest.php">Create Request</a></li> <?php };
+				if($userType == "Admin") { ?> <li><a href="Admin.php"><span class="logo_colour">Admin</span></a></li> <?php } else { ?> <li><a href="User.php">Profile</a></li>  <?php }; ?> 
+				<li><a href="logout.php" onclick="callFunction(this.href);return false;">Logout</a></li> <?php
+				} else { ?>
+				<li><a href="CreateAccount.php">Login / Create Account</a></li>
+				<?php }; ?>
+			</ul>
+		</div>
 	</div>
-  </div>
-  <div id="menubar">
-	<!-- This div contains the code for the navbar buttons that are available for each user type -->
-	<ul id="menu">
-	  <li><a href="index.php">Home</a></li>
-	  <?php 
-	  if (isset($_SESSION['userType'])) {
-		if($userType == "Admin") {} else if ($userType == "Volunteer") { ?> <li><a href="CreateRequest.php">Create Offer</a></li> <?php } elseif ($userType == "Key Worker") { ?> <li><a href="CreateRequest.php">Create Request</a></li> <?php };
-		if($userType == "Admin") { ?> <li><a href="Admin.php"><span class="logo_colour">Admin</span></a></li> <?php } else { ?> <li><a href="User.php">Profile</a></li>  <?php }; ?> 
-	  <li><a href="logout.php" onclick="callFunction(this.href);return false;">Logout</a></li> <?php
-	  } else { ?>
-		  <li><a href="CreateAccount.php">Login / Create Account</a></li>
-	  <?php }; ?>
-	</ul>
-  </div>
-</div>
+</nav>
