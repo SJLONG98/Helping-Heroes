@@ -10,14 +10,6 @@
 	color: white;
 }
 
-.navbar-inverse .navbar-nav > li > a {
-	color: #ffffff;
-	font-family: Lato;
-	font-size: 1.7em;
-	font-weight: 300;
-	padding: 30px 25px 33px 25px;
-}
-
 .navbar-inverse .navbar-nav li a:hover {
 	background-color: #005EB8;
 	transition: 0.7s all linear;
@@ -26,4 +18,26 @@
 
 .hidden {
 	display: none;
+}
+
+.large-text {
+	height: 50px;
+	word-wrap: break-word;
+}
+
+.headerButton {
+	border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 24px;
+}
+
+#resultList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
