@@ -95,6 +95,7 @@
 		<link rel="icon" href="#"/>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Create <?php echo $jobTypeCapital; ?></title>
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
@@ -104,79 +105,89 @@
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
 		?>
-		<div id="site_content">
-			<!-- The below form is to be filled in in full to insert into the database -->
-			<h2>Create <?php echo $jobTypeCapital; ?></h2>
-			<h4>Please fill out the following form to create <?php echo $jobTypeWithPrefix; ?>.</h4>
-			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-				<div>
-					<label for="requestTitle"><?php echo $jobTypeCapital; ?> Title</label>
-					<br>
-					<input type="text" id="requestTitle" name="requestTitle" placeholder=" ">
-					<?php if (empty($userID_err)) { 
-							} else { ?>
-					<p><?php echo $userID_err; ?></p>
-					<?php } ?>
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2 sidenav"></div>
+				<div class="col-sm-8">
+					<!-- The below form is to be filled in in full to insert into the database -->
+					<h2>Create <?php echo $jobTypeCapital; ?></h2>
+					<h4>Please fill out the following form to create <?php echo $jobTypeWithPrefix; ?>.</h4>
+					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+						<div>
+							<label for="requestTitle"><?php echo $jobTypeCapital; ?> Title</label>
+							<br>
+							<input type="text" id="requestTitle" name="requestTitle" placeholder=" ">
+							<?php if (empty($userID_err)) { 
+									} else { ?>
+							<p><?php echo $userID_err; ?></p>
+							<?php } ?>
+						</div>
+					
+						<div>
+							<label for="requestType"><?php echo $jobTypeCapital; ?> Type</label>
+							<br>
+							<select type="text" id="requestType" name="requestType">
+									<option value="#">Please choose <?php echo $jobTypeWithPrefix; ?> type...</option>
+									<option value="1">Shopping</option>
+									<option value="2">Retrieving Medication</option>
+									<option value="3">Caring for / walking pet</option>
+									<option value="4">House tasks</option>
+									<option value="5">Other</option>
+							</select>
+						</div>
+						
+						<div>
+							<label for="furtherDetails">Further Details</label>
+							<br>
+							<input class="large-text" type="text" id="furtherDetails" name="furtherDetails" placeholder=" ">
+							<?php if (empty($userID_err)) { 
+									} else { ?>
+							<p><?php echo $userID_err; ?></p>
+							<?php } ?>
+						</div>
+						
+						<div>
+							<label for="distance">Distance</label>
+							<br>
+							<select type="text" id="distance" name="distance">
+									<option value="#">Please choose a distance from your home...</option>
+									<option value="1">In my Area</option>
+									<option value="2">In my District</option>
+									<option value="3">In my Sub-District</option>
+									<option value="4">Anywhere</option>
+							</select>
+						</div>
+						
+						<div>
+							<label for="duration">Duration</label>
+							<br>
+							<select type="text" id="duration" name="duration">
+									<option value="#">Please choose a duration of your <?php echo $jobTypeLower; ?>...</option>
+									<option value="1">1 day</option>
+									<option value="2">1 week</option>
+									<option value="3">2 weeks</option>
+									<option value="3">2+ weeks</option>
+							</select>
+						</div>
+						
+						<div>
+							<label for="startDate">Start Date</label>
+							<br>
+							<input type="date" name="startDate" min="<?php echo date('Y-m-d'); ?>" max="2020-12-31" value="<?php echo date('Y-m-d'); ?>">
+							<?php if (empty($startDate_err)) { 
+									} else { ?>
+							<p><?php echo $startDate_err; ?></p>
+							<?php } ?>
+						</div>
+						
+						<br>
+						<input type="submit" value="Create <?php echo $jobTypeCapital; ?>">
+					</form>
 				</div>
-			
-				<div>
-					<label for="requestType"><?php echo $jobTypeCapital; ?> Type</label>
-					<br>
-					<select type="text" id="requestType" name="requestType">
-							<option value="#">Please choose <?php echo $jobTypeWithPrefix; ?> type...</option>
-							<option value="1">Shopping</option>
-							<option value="2">Retrieving Medication</option>
-							<option value="3">Caring for / walking pet</option>
-							<option value="4">House tasks</option>
-							<option value="5">Other</option>
-					</select>
-				</div>
-				
-				<div>
-					<label for="furtherDetails">Further Details</label>
-					<br>
-					<input type="text" id="furtherDetails" name="furtherDetails" placeholder=" ">
-					<?php if (empty($userID_err)) { 
-							} else { ?>
-					<p><?php echo $userID_err; ?></p>
-					<?php } ?>
-				</div>
-				
-				<div>
-					<label for="distance">Distance</label>
-					<br>
-					<select type="text" id="distance" name="distance">
-							<option value="#">Please choose a distance from your home...</option>
-							<option value="1">up to 1 mile</option>
-							<option value="2">up to 2 miles</option>
-							<option value="3">more than 2 miles</option>
-					</select>
-				</div>
-				
-				<div>
-					<label for="duration">Duration</label>
-					<br>
-					<select type="text" id="duration" name="duration">
-							<option value="#">Please choose a duration of your <?php echo $jobTypeLower; ?>...</option>
-							<option value="1">1 day</option>
-							<option value="2">1 week</option>
-							<option value="3">2+ weeks</option>
-					</select>
-				</div>
-				
-				<div>
-					<label for="startDate">Start Date</label>
-					<br>
-					<input type="date" name="startDate" value="<?php echo date('Y-m-d'); ?>">
-					<?php if (empty($startDate_err)) { 
-							} else { ?>
-					<p><?php echo $startDate_err; ?></p>
-					<?php } ?>
-				</div>
-				
-				<br>
-				<input type="submit" value="Create <?php echo $jobTypeCapital; ?>">
-			</form>
+				<div class="col-sm-2 sidenav"></div>
+			</div>
 		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</body>
 </html>

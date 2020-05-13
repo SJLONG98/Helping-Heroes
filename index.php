@@ -42,7 +42,7 @@
 	}
 
 	// Sets up query for all jobs which has the inverse type of the current user
-	$getJobs = "SELECT * FROM jobs WHERE pairedUserId is null AND isApproved is null AND userType in ({$otherType})";
+	$getJobs = "SELECT a.jobTitle, a.jobType, a.jobDescription, b.postcode, a.jobID FROM jobs a LEFT JOIN user b ON a.userID = b.userId WHERE a.pairedUserId is null AND a.isApproved is null AND a.userType in ({$otherType})";
 	$result = mysqli_query($link, $getJobs);
 ?>
 
@@ -64,40 +64,61 @@
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
 		?>
-		<div class="container-fluid text-center">    
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<h2>Welcome to Helping Heroes</h2>
+				<input type="text" id="filterInput" onkeyup="getResults()" placeholder="Enter a postcode..." title="Filter by Postcode">
+			</div>
 			<div class="row content">
 				<div class="col-sm-2 sidenav"></div>
 				<!-- This div contains the details for a list of all jobs
 						with limits on whether the user is signed in and
 						their user type -->
-				<div class="col-sm-8 text-left">
-					<h2>Welcome to Helping Heroes</h2>
-					<?php while($row = mysqli_fetch_array($result)){ ?>
-						<div class="job">
-							<div class="job_inf">
-								<h3><?php echo $row[2]; ?></h3>
-								<p><?php echo getJobType($row[3]); ?></p>
-								<p><?php echo $row[4]; ?></p>
-							</div>
-							<div class="job_btn">
-								<!-- This div shows a button for logged in users to claim a job
-										and links to login for other users-->
-								<?php if(isset($_SESSION['login_user'])) { ?>
-									<?php if($_SESSION['userType'] != 1) { ?>
+				<div class="col-sm-8 text-center">
+					<ul id="resultList" >
+						<?php $i=0; while(($row = mysqli_fetch_array($result)) && ($i<10)){ ?>
+						<li class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+							<form action="JobDetails.php" method="post">
+								<button type="submit" name="jobID" value="<?php echo $row[4]; ?>" class="headerButton"><?php echo $row[0]; ?></button>
+								<p id="jobTypeText"><?php echo getJobType($row[1]); ?></p>
+								<p id="jobDescText"><?php echo $row[2]; ?></p>
+								<p id="postcodeText"><?php echo $row[3]; ?></p>
+							</form>
+							<?php if(isset($_SESSION['login_user'])) { ?>
+								<?php if($_SESSION['userType'] != 1) { ?>
 									<form action ="claimJob.php" method = "post">
-										<button type='submit' name='claim' value=<?php echo "'{$row[10]}'" ?> >Claim <?php echo $jobTypeCapital; ?></button>
+										<button type='submit' name='claim' value=<?php echo "'{$row[4]}'" ?> >Claim <?php echo $jobTypeCapital; ?></button>
 									</form>
-									<?php } ?>
-								<?php } else { ?>
-									<a href="CreateAccount.php">Login/Register to claim</a>
-								<?php }; ?>
-							</div>
-						</div>
-					<?php }; ?>
+								<?php } ?>
+							<?php } else { ?>
+								<a href="CreateAccount.php">Login/Register to claim</a>
+							<?php $i++; }; ?>
+						</li>
+						<?php }; ?>
+					</ul>
 				</div>
 				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
+		
+		<script type="text/javascript">
+			function getResults() {
+				var input, filter, ul, li, postcodeText, i, txtValue;
+				input = document.getElementById("filterInput");
+				filter = input.value.toUpperCase();
+				ul = document.getElementById("resultList");
+				li = ul.getElementsByTagName("li");
+				for (i = 0; i < li.length; i++) {
+					postcodeText = li[i].getElementsByTagName("p")[2];
+					txtValue = postcodeText.textContent || postcodeText.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						li[i].style.display = "";
+					} else {
+						li[i].style.display = "none";
+					}
+				}
+			}
+		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</body>

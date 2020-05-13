@@ -69,6 +69,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="icon" href="#"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 		<title>Profile</title>
 	</head>
 	<body>
@@ -83,7 +84,7 @@
 							as well as the link to the edit account page to
 							add to these details.
 						 It also contains a list of current pending jobs -->
-				    <h3>Details <?php echo $userTypeDesc; ?>s</h3>
+				    <h3>Details</h3>
 					<a href="EditAccount.php" class="button">Edit Account</a>
 					<?php while($row = mysqli_fetch_array($resultUser)){ ?>
 						<div class="job">
@@ -124,6 +125,7 @@
 				<?php }; ?>
 			</div>
 		</div>
-		<script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</body>
 </html>
