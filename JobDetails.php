@@ -91,7 +91,7 @@
 						</li>
 					</ul>
 					<?php if(isset($_SESSION['login_user'])) { ?>
-						<?php if($_SESSION['userType'] != 1) { ?>
+						<?php if($_SESSION['userType'] != 1 && $_SESSION['isVetted'] == 1) { ?>
 							<form action ="claimJob.php" method = "post">
 								<button type='submit' name='claim' value=<?php echo $jobID; ?> >Claim <?php echo $jobTypeCapital; ?></button>
 							</form>

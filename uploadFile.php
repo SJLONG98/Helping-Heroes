@@ -30,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	// Create the mySQL code to be run in the database
-	$updateFile = "UPDATE user SET vettingFileName = ? WHERE userID = ?";
+	$updateFile = "UPDATE user SET vettingFileName = ?, isVetted = null WHERE userID = ?";
 
 	// If the code it valid then run it with the file and userID parameters
 	//  and return to the edit account page

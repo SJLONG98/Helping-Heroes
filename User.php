@@ -46,12 +46,20 @@
 	}
 	
 	// Sets up query for all jobs the user has created
-	$getJobs = "SELECT * FROM jobs WHERE userID = \"{$userID}\"";
+	$getJobs = "SELECT * FROM jobs WHERE userID = \"{$userID}\" UNION SELECT * FROM jobs_history WHERE userID = \"{$userID}\";";
 	$result = mysqli_query($link, $getJobs);
 	
 	// Sets up query for all jobs the user has claimed
 	$getPendingJobs = "SELECT * FROM jobs WHERE pairedUserID = \"{$userID}\" AND isApproved is null";
 	$resultPending = mysqli_query($link, $getPendingJobs);
+	
+	// Sets up query for all jobs the user has claimed
+	$getDeniedJobs = "SELECT * FROM jobs WHERE pairedUserID = \"{$userID}\" AND isApproved = 0";
+	$resultDenied = mysqli_query($link, $getDeniedJobs);
+	
+	// Sets up query for all jobs the user has claimed
+	$getActiveJobs = "SELECT * FROM jobs WHERE pairedUserID = \"{$userID}\" AND isApproved = 1";
+	$resultActive = mysqli_query($link, $getActiveJobs);
 	
 	// Sets up query for all the user details
 	$getUserDetails = "SELECT * FROM user WHERE userID = \"{$userID}\"";
@@ -77,28 +85,14 @@
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
 		?>
-		<div id="site_content">
-			<div id="sidebar_container">
-				<div class="sidebar_item">
-					<!-- This div contains the details for the current user
-							as well as the link to the edit account page to
-							add to these details.
-						 It also contains a list of current pending jobs -->
-				    <h3>Details</h3>
-					<a href="EditAccount.php" class="button">Edit Account</a>
-					<?php while($row = mysqli_fetch_array($resultUser)){ ?>
-						<div class="job">
-							<div class="job_inf">
-								<div><?php echo $userTypeDesc; ?></div>
-								<div><?php echo $row[1]; ?></div>
-								<div><?php echo $row[6]; ?></div>
-								<div><?php echo $row[7]; ?></div>
-								<div><?php echo $row[8]; ?></div>
-							</div>
-						</div>
-					<?php }; ?>
-					<h3>Pending <?php echo $jobTypeCapital; ?>s</h3>
-					<?php while($row = mysqli_fetch_array($resultPending)){ ?>
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2 sidenav"></div>
+				<div class="col-sm-3">
+					<!-- This div contains a list of all a user's created jobs -->
+					<h2>Hi <?php echo $_SESSION['userID'];?>!</h2>
+					<h3>This is where you can review your <?php echo $jobTypeLower; ?>s.</h3>
+					<?php while($row = mysqli_fetch_array($result)){ ?>
 						<div class="job">
 							<div class="job_inf">
 								<div><?php echo $row[2]; ?></div>
@@ -106,23 +100,42 @@
 								<div><?php echo $row[4]; ?></div>
 							</div>
 						</div>
+						<br>
 					<?php }; ?>
 				</div>
-			</div>
-			<div id="content">
-				<!-- This div contains a list of all a user's created jobs -->
-				<h2>Hi <?php echo $_SESSION['userID'];?>!</h2>
-				<h3>This is where you can review your <?php echo $jobTypeLower; ?>s.</h3>
-				<?php while($row = mysqli_fetch_array($result)){ ?>
-					<div class="job">
-						<div class="job_inf">
-							<div><?php echo $row[2]; ?></div>
-							<div><?php echo getJobType($row[3]); ?></div>
-							<div><?php echo $row[4]; ?></div>
-						</div>
-					</div>
-					<br>
-				<?php }; ?>
+				<div class="col-sm-2 sidenav"></div>
+				<div class="col-sm-3">
+					<!-- This div contains the details for the current user
+							as well as the link to the edit account page to
+							add to these details.
+						 It also contains a list of current pending jobs -->
+				    <h3>Details</h3>
+					<a href="EditAccount.php" class="button">Edit Account</a>
+					<?php while($row = mysqli_fetch_array($resultUser)){ ?>
+						<div><?php echo $userTypeDesc; ?></div>
+						<div><?php echo $row[1]; ?></div>
+						<div><?php echo $row[6]; ?></div>
+						<div><?php echo $row[7]; ?></div>
+						<div><?php echo $row[8]; ?></div>
+					<?php }; ?>
+					<h3>Active <?php echo $jobTypeCapital; ?>s</h3>
+					<?php while($row = mysqli_fetch_array($resultActive)){ ?>
+						<div><?php echo $row[2]; ?></div>
+						<div><?php echo getJobType($row[3]); ?></div>
+						<div><?php echo $row[4]; ?></div>
+						<form action ="completeCancelJob.php" method = "post">
+							<button type='submit' name='complete' value=<?php echo "'{$row[10]}'" ?>>Complete</button>
+							<button type='submit' name='cancel' value=<?php echo "'{$row[10]}'" ?>>Cancel</button>
+						</form>
+					<?php }; ?>
+					<h3>Pending <?php echo $jobTypeCapital; ?>s</h3>
+					<?php while($row = mysqli_fetch_array($resultPending)){ ?>
+						<div><?php echo $row[2]; ?></div>
+						<div><?php echo getJobType($row[3]); ?></div>
+						<div><?php echo $row[4]; ?></div>
+					<?php }; ?>
+				</div>
+				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

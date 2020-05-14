@@ -16,6 +16,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		$jobID_err = "No jobID given.";
 	}
 	
+	// Check job is still in range
+	
+	
+	// Check job exists in the `jobs` table
+	$getJob = "SELECT * FROM jobs WHERE jobID = \"{$jobID}\";";
+	$returnedJob = mysqli_query($link, $getJob);
+	
+	if (empty($returnedJob)) {
+		$_SESSION['overlayCheck'] = "This is a test.";
+		header("location: index.php");
+	} else {
+		unset($_SESSION['overlayCheck']);
+	}
+	
 	// Create mySQL statement to update the database
 	$stmt = "UPDATE jobs SET pairedUserID = \"{$userID}\" WHERE jobID = {$jobID};";
 

@@ -6,6 +6,10 @@
     }
 	include_once("connection.php");  
 
+	if (!(isset($_SESSION['isVetted'])) || !(isset($_SESSION['login_user'])) || $_SESSION['isVetted'] != 1) {
+		header('Location: index.php');
+	}
+	
 	// Setting page variables to be used in the code
 	if($_SESSION['userType'] == 2) {
 		$jobTypeLower = 'offer';
@@ -19,8 +23,8 @@
 
 	$userID = $_SESSION['userID'];
 	$userType = $_SESSION['userType'];
-	$requestTitle = $requestType = $furtherDetails = $distance = $duration = $startDate = "";
-	$requestTitle_err = $requestType_err = $furtherDetails_err = $distance_err = $duration_err = $startDate_err = "";
+	$requestTitle = $requestType = $furtherDetails = $duration = $startDate = "";
+	$requestTitle_err = $requestType_err = $furtherDetails_err = $duration_err = $startDate_err = "";
 
 	// If the page was opened as a post method then perform code
 	if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -44,11 +48,13 @@
 			$requestType = trim($_POST["requestType"]);
 		}
 		
+		/*
 		if((trim($_POST["distance"])) == "#") {
 			$distance_err = "Please select a distance.";
 		} else {
 			$distance = trim($_POST["distance"]);
 		}
+		*/
 		
 		if((trim($_POST["duration"])) == "#") {
 			$duration_err = "Please select a duration.";
@@ -64,16 +70,15 @@
 
 		// If there are no errors with the POST methods then insert the job reuqest
 		//  into the database
-		if(empty($requestTitle_err) && empty($requestType_err) && empty($furtherDetails_err) && empty($distance_err) && empty($duration_err) && empty($startDate_err)) {
-			$addJob = "INSERT INTO jobs (userID, userType, jobTitle, jobType, jobDescription, distance, duration, startDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		if(empty($requestTitle_err) && empty($requestType_err) && empty($furtherDetails_err) && empty($duration_err) && empty($startDate_err)) {
+			$addJob = "INSERT INTO jobs (userID, userType, jobTitle, jobType, jobDescription, duration, startDate) VALUES (?, ?, ?, ?,  ?, ?, ?)";
 			if($add = mysqli_prepare($link, $addJob)) {
-				mysqli_stmt_bind_param($add, "ssssssss", $param_userID, $param_userType, $param_jobTitle, $param_jobType, $param_jobDescription, $param_distance, $param_duration, $param_startDate);
+				mysqli_stmt_bind_param($add, "sssssss", $param_userID, $param_userType, $param_jobTitle, $param_jobType, $param_jobDescription, $param_duration, $param_startDate);
 				$param_userID = $userID;
 				$param_userType = $userType;
 				$param_jobTitle = $requestTitle;
 				$param_jobType = $requestType;
 				$param_jobDescription = $furtherDetails;
-				$param_distance = $distance;
 				$param_duration = $duration;
 				$param_startDate = $startDate;
 				
@@ -146,6 +151,7 @@
 							<?php } ?>
 						</div>
 						
+						<!--
 						<div>
 							<label for="distance">Distance</label>
 							<br>
@@ -157,6 +163,7 @@
 									<option value="4">Anywhere</option>
 							</select>
 						</div>
+						-->
 						
 						<div>
 							<label for="duration">Duration</label>

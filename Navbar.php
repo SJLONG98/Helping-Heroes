@@ -10,7 +10,7 @@
 	//  and log which type of user they are
 	if (isset($_SESSION['login_user'])){
 		
-		$sql = "SELECT userType FROM user WHERE email = ?";
+		$sql = "SELECT userType, isVetted FROM user WHERE email = ?";
 
 		if($stmt = mysqli_prepare($link, $sql)) {
 			mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -22,7 +22,7 @@
 			mysqli_stmt_store_result($stmt);
 
 			if(mysqli_stmt_num_rows($stmt) == 1) {
-				mysqli_stmt_bind_result($stmt, $uType);
+				mysqli_stmt_bind_result($stmt, $uType, $iVetted);
 				mysqli_stmt_fetch($stmt);
 				$_SESSION['userType'] = $uType;
 			}
@@ -35,9 +35,12 @@
 		} elseif ($_SESSION['userType'] == 3) {
 			$userType = "Key Worker";
 		}
+		
+		$isVetted = $iVetted;
+		$_SESSION['isVetted'] = $isVetted;
 	}
+	
 ?>
-
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -57,7 +60,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<?php 
 				if (isset($_SESSION['userType'])) {
-				if($userType == "Admin") {} else if ($userType == "Volunteer") { ?> <li><a href="CreateRequest.php">Create Offer</a></li> <?php } elseif ($userType == "Key Worker") { ?> <li><a href="CreateRequest.php">Create Request</a></li> <?php };
+				if($userType == "Admin") {} else if ($userType == "Volunteer" && $isVetted == 1) { ?> <li><a href="CreateRequest.php">Create Offer</a></li> <?php } elseif ($userType == "Key Worker" && $isVetted == 1) { ?> <li><a href="CreateRequest.php">Create Request</a></li> <?php };
 				if($userType == "Admin") { ?> <li><a href="Admin.php"><span class="logo_colour">Admin</span></a></li> <?php } else { ?> <li><a href="User.php">Profile</a></li>  <?php }; ?> 
 				<li><a href="logout.php" onclick="callFunction(this.href);return false;">Logout</a></li> <?php
 				} else { ?>

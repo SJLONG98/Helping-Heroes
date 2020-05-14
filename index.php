@@ -6,6 +6,13 @@
     } 
 	include("connection.php");
 
+	if (isset($_SESSION['overlayCheck'])) {
+		$overlayCheck = $_SESSION['overlayCheck'];
+	} else {
+		$overlayCheck = "None";
+	}
+	
+
 	// Setting page variables to be used in the code
 	if(isset($_SESSION['userType'])) {
 		if($_SESSION['userType'] == 2) {
@@ -59,7 +66,23 @@
 		<link rel="icon" href="#"/>
 		<title>Helping Heroes</title>
 	</head>
-	<body>
+	<body onload="on()">
+		<div id="overlay" onclick="off()">
+			<div id="overlayText"><?php echo $overlayCheck; ?></div>
+		</div>
+		<script>	
+			function on() {
+				overlayCheck = "<?php echo $overlayCheck; ?>";
+				if (!(overlayCheck === "None")) {
+					document.getElementById("overlay").style.display = "block";
+				}
+			}
+
+			function off() {
+				document.getElementById("overlay").style.display = "none";
+			}
+		</script>
+
 		<?php 
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
@@ -68,6 +91,16 @@
 			<div class="row content">
 				<h2>Welcome to Helping Heroes</h2>
 				<input type="text" id="filterInput" onkeyup="getResults()" placeholder="Enter a postcode..." title="Filter by Postcode">
+				<div>
+					<select type="text" id="requestType" name="requestType" onchange="filterFunction()">
+						<option value="#">Select a job type</option>
+						<option value="Shopping">Shopping</option>
+						<option value="Retrieving Medication">Retrieving Medication</option>
+						<option value="Caring for / walking pet">Caring for / walking pet</option>
+						<option value="House tasks">House tasks</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
 			</div>
 			<div class="row content">
 				<div class="col-sm-2 sidenav"></div>
@@ -85,7 +118,7 @@
 								<p id="postcodeText"><?php echo $row[3]; ?></p>
 							</form>
 							<?php if(isset($_SESSION['login_user'])) { ?>
-								<?php if($_SESSION['userType'] != 1) { ?>
+								<?php if($_SESSION['userType'] != 1 && $_SESSION['isVetted'] == 1) { ?>
 									<form action ="claimJob.php" method = "post">
 										<button type='submit' name='claim' value=<?php echo "'{$row[4]}'" ?> >Claim <?php echo $jobTypeCapital; ?></button>
 									</form>
@@ -112,6 +145,23 @@
 					postcodeText = li[i].getElementsByTagName("p")[2];
 					txtValue = postcodeText.textContent || postcodeText.innerText;
 					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						li[i].style.display = "";
+					} else {
+						li[i].style.display = "none";
+					}
+				}
+			}
+			
+			function filterFunction() {
+				var input, ul, li, jobTypeText, i, txtValue;
+				input = document.getElementById("requestType").value;
+				console.log(input);
+				ul = document.getElementById("resultList");
+				li = ul.getElementsByTagName("li");
+				for (i = 0; i < li.length; i++) {
+					jobTypeText = li[i].getElementsByTagName("p")[0];
+					txtValue = jobTypeText.textContent || jobTypeText.innerText;
+					if (txtValue.indexOf(input) > -1 || input == "#") {
 						li[i].style.display = "";
 					} else {
 						li[i].style.display = "none";
