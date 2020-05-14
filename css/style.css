@@ -16,6 +16,37 @@
 	height: 100%;
 }
 
+input {
+	width: 75%;
+	padding: 10px 20px;
+	margin: 10px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	}
+	
+input[type=submit] {
+	width: 50%;
+	background-color: #3c3c4a;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	}
+	
+select {
+	width: 50%;
+	padding: 10px 20px;
+	margin: 10px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	}
+	
 .hidden {
 	display: none;
 }
@@ -30,7 +61,7 @@
     outline: none;
     background: none;
     cursor: pointer;
-    padding: 0;
+    padding: 20px 0px;
     text-decoration: none;
     font-family: inherit;
     font-size: 24px;
@@ -38,6 +69,85 @@
 
 #resultList {
   list-style: none;
-  padding: 0;
+  padding: 30px 0px;
   margin: 0;
 }
+/*footer stuff*/
+
+
+.footer {
+	position: fixed;
+  	left: 0;
+  	bottom: 0;
+  	width: 100%;
+  	color: #0072CE;
+  	text-align: center;
+	}
+.slideshow-container {
+	position: relative;
+	background: #f1f1f1f1;
+  }
+  
+  
+  .mySlides {
+	display: none;
+	padding: 80px;
+	text-align: center;
+  }
+  
+  
+  .prev, .next {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: auto;
+	margin-top: -30px;
+	padding: 16px;
+	color: #888;
+	font-weight: bold;
+	font-size: 20px;
+	border-radius: 0 3px 3px 0;
+	user-select: none;
+  }
+  
+  
+  .next {
+	position: absolute;
+	right: 0;
+	border-radius: 3px 0 0 3px;
+  }
+  
+
+  .prev:hover, .next:hover {
+	background-color: rgba(0,0,0,0.8);
+	color: white;
+  }
+  
+  
+  .dot-container {
+	  text-align: center;
+	  padding: 20px;
+	  background: #ddd;
+  }
+  
+  
+  .dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+  }
+  
+
+  .active, .dot:hover {
+	background-color: #717171;
+  }
+
+  q {font-style: italic;}
+
+  .author {color: cornflowerblue;}
+
