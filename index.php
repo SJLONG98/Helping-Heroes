@@ -67,22 +67,6 @@
 		<title>Helping Heroes</title>
 	</head>
 	<body onload="on()">
-		<div id="overlay" onclick="off()">
-			<div id="overlayText"><?php echo $overlayCheck; ?></div>
-		</div>
-		<script>	
-			function on() {
-				overlayCheck = "<?php echo $overlayCheck; ?>";
-				if (!(overlayCheck === "None")) {
-					document.getElementById("overlay").style.display = "block";
-				}
-			}
-
-			function off() {
-				document.getElementById("overlay").style.display = "none";
-			}
-		</script>
-
 		<?php 
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
@@ -90,6 +74,7 @@
 		<div class="container-fluid text-center">
 			<div class="row content">
 				<h2>Welcome to Helping Heroes</h2>
+				<p>*To be able to claim a job you must be logged in and approved by an admin</p>
 				<input type="text" id="filterInput" onkeyup="getResults()" placeholder="Enter a postcode..." title="Filter by Postcode">
 				<div>
 					<select type="text" id="requestType" name="requestType" onchange="filterFunction()">
@@ -102,19 +87,20 @@
 					</select>
 				</div>
 			</div>
-			<div class="row content">
+			<div class="row content" >
 				<div class="col-sm-2 sidenav"></div>
 				<!-- This div contains the details for a list of all jobs
 						with limits on whether the user is signed in and
 						their user type -->
-				<div class="col-sm-8 text-center">
+				<div class="col-sm-8 text-center" id= >
 					<ul id="resultList" >
 						<?php $i=0; while(($row = mysqli_fetch_array($result)) && ($i<10)){ ?>
-						<li class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+						<li class="col-xs-6 col-sm-6 col-md-4 col-lg-4 jobItem" id=joblist>
+						<div class="card">
 							<form action="JobDetails.php" method="post">
 								<button type="submit" name="jobID" value="<?php echo $row[4]; ?>" class="headerButton"><?php echo $row[0]; ?></button>
 								<p id="jobTypeText"><?php echo getJobType($row[1]); ?></p>
-								<p id="jobDescText"><?php echo $row[2]; ?></p>
+								<p id="jobDescText"><span id="jobDesc"><?php echo $row[2]; ?></span></p>
 								<p id="postcodeText"><?php echo $row[3]; ?></p>
 							</form>
 							<?php if(isset($_SESSION['login_user'])) { ?>
@@ -126,6 +112,7 @@
 							<?php } else { ?>
 								<a href="CreateAccount.php">Login/Register to claim</a>
 							<?php $i++; }; ?>
+							</div>
 						</li>
 						<?php }; ?>
 					</ul>
@@ -171,5 +158,6 @@
 		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<div> <?php include("footer.php"); ?> </div>
 	</body>
 </html>

@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	
 	if(!empty($complete)) {
 		$jobID = $complete;
-	} elseif(!empty($complete)) {
+	} elseif(!empty($cancel)) {
 		$jobID = $cancel;
 	} else {
 		header("location: User.php");

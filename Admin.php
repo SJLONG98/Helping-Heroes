@@ -62,7 +62,7 @@
 		<div class="container-fluid text-center">
 			<div class="row content">
 				<div class="col-sm-2 sidenav"></div>
-				<div class="col-sm-3">
+				<div class="col-sm-8">
 					<h2>Approve or Deny Users</h2>
 					<?php while($row = mysqli_fetch_array($result)){ ?>
 						<div class="job">
@@ -79,10 +79,12 @@
 						</div>
 					<?php }; ?>
 				</div>
+				<!--
 				<div class="col-sm-2 sidenav"></div>
 				<div class="col-sm-3">
 					<a href="AdminLists.php" class="button">Aproval List</a>
 				</div>
+				-->
 				<div class="col-sm-2 sidenav"></div>
 			</div>
 			<div class="row content">

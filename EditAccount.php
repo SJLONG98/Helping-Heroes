@@ -178,11 +178,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 					<!-- This div contains the current verified status of the user
 							as well as a form to upload a file to be used as verification.-->
 					<h2>Verified Status</h2>
+					<p>Please upload a pfd file to be vetted.</p>
 					<h4><?php echo $status; ?></h4>
 					<?php if ($hasUploaded == 0 && $status != "Approved") {?>
 						<form action="uploadFile.php" method="post" enctype="multipart/form-data">
 							Select file to upload for approval:
 							<input type="file" name="fileToUpload" id="fileToUpload" accept=".pdf">
+							<br>
 							<input type="submit" value="Add File" name="submit">
 					</form>
 					<?php } elseif ($status == "Not Approved") {?>

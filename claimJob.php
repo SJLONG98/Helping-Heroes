@@ -24,14 +24,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	$returnedJob = mysqli_query($link, $getJob);
 	
 	if (empty($returnedJob)) {
-		$_SESSION['overlayCheck'] = "This is a test.";
+		$_SESSION['overlayCheck'] = "There was an issue claiming that job.";
 		header("location: index.php");
 	} else {
 		unset($_SESSION['overlayCheck']);
 	}
 	
 	// Create mySQL statement to update the database
-	$stmt = "UPDATE jobs SET pairedUserID = \"{$userID}\" WHERE jobID = {$jobID};";
+	$stmt = "UPDATE jobs SET pairedUserID = \"{$userID}\", isApproved = 1 WHERE jobID = {$jobID};";
 
 	if($update = mysqli_prepare($link, $stmt)) {
 		mysqli_stmt_execute($update);
