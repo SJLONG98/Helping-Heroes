@@ -1,7 +1,25 @@
 
 <html>
 	<head>
-	<link rel="icon" href="images/Hlogo.png" type="image/png" sizes="16x16">
+		<style>
+	.navbar-inverse .navbar-toggle {
+			border-color: gray;
+			color: black;
+			}
+	.navbar-toggle {
+    		background-color: gray;
+			}
+	.navbar-inverse .navbar-nav>li>a {
+    	color: black;
+			}
+	.navbar-inverse .navbar-nav > li > a:hover,
+	.navbar-inverse .navbar-nav > li > a:focus {
+		color: gray;
+		background-color: transparent;
+			}
+
+
+		</style>
 	</head>
 </html>
 <?php

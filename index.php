@@ -63,10 +63,10 @@
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<link rel="icon" href="#"/>
+		<link rel="icon" href="images/Hlogo.png" type="image/png" sizes="16x16">
 		<title>Helping Heroes</title>
 	</head>
-	<body onload="on()">
+	<body >
 		<?php 
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");

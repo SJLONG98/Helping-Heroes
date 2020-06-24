@@ -223,10 +223,12 @@
 								<p> <?php echo str_replace('+',' ',$_SESSION['Message']);?> </p>
 							<?php unset($_SESSION['Message']); } ?>
 						</div>
+						<a href="PasswordReset.php" >Reset your password</a>
+						<div></div>
 
 						<input type="submit" name="submit" value="Login" id="login" onclick="loginFunction()">
 					</form>
-					<a href="PasswordReset.php" >
+				
 				</div>
 				<div class="col-sm-2 sidenav"></div>
 			</div>
