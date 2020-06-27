@@ -112,10 +112,13 @@
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 	</head>
 	<body>
+	
 		<?php 
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
 		?>
+
+		
 		<div class="container-fluid text-center">    
 			<div class="row content">
 				<div class="col-sm-2 sidenav"></div>

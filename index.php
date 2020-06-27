@@ -69,6 +69,7 @@
 	<body >
 		<?php 
 			// Necessary reference to include our dynamic navbar
+			include("overlay.php");
 			include("Navbar.php");
 		?>
 		<div class="container-fluid text-center">
@@ -86,6 +87,15 @@
 						<option value="Other">Other</option>
 					</select>
 				</div>
+			</div>
+			<div>
+			<?php
+			if (isset($_GET["newpwd"])) {
+				if ($_GET["newpwd"] == "passwordUpdated") {
+					echo "your password has been changed";
+				}
+			}
+			?>
 			</div>
 			<div class="row content" >
 				<div class="col-sm-2 sidenav"></div>

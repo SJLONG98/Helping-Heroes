@@ -9,6 +9,8 @@
 	if($_SERVER['REQUEST_METHOD'] == "POST") {
 		
 	}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -21,22 +23,35 @@
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<link rel="icon" href="#"/>
+		<link rel="icon" href="images/Hlogo.png" type="image/png" sizes="16x16">
 		<title>Password Reset</title>
 	</head>
+	<?php
+	include("Navbar.php");
+	?>
+		<main>
+			<div class="container-fluid text-center">
+				<h1> Reset your password</h1>
+				<p> An Email will be sent to you with insuructions on how to reset your password</p>
+					<form action="sendEmail.php" method="post">
+						<input type="text" name="email" placeholder="Enter your Email...">
+						<input type="submit" name="ResetPassword" value="Reset">
+						</form>
+				<?php
+
+				if (isset($_GET["reset"])) {
+					if ($_GET["reset"] == "success") {
+						echo '<p class"signupsuccess"> Check Your Email</p>';
+					}
+				}
+				?>
+				
+			</div>
+		</main>
 	<body>
-		<?php 
-			// Necessary reference to include our dynamic navbar
-			include("Navbar.php");
-		?>
-		<div class="container-fluid text-center">    
-			<div class="row content">
-				<div class="col-sm-2 sidenav"></div>
-				<div class="col-sm-8 text-left">
-					<h2>Password Reset Tool</h2>
-					<form action="getSecurityQuestion.php" method = "post">
-					</form>
-				</div>
+
+		
+		
 				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
