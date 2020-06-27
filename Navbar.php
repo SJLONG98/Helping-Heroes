@@ -67,7 +67,7 @@
 <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="index.php">Helping Heroes</a>
+			<a class="navbar-brand" href="index.php"><img src="images/helpingheroes.png" alt="Logo" style="width:120px;"></a>
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
