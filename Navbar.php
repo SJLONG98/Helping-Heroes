@@ -64,7 +64,7 @@
 	}
 	
 ?>
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation" id="nav">
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="index.php"><img src="images/helpingheroes.png" alt="Logo" style="width:120px;"></a>
