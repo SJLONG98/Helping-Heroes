@@ -32,9 +32,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	
 	// Create mySQL statement to update the database
 	$stmt = "UPDATE jobs SET pairedUserID = \"{$userID}\", isApproved = 1 WHERE jobID = {$jobID};";
+	$stmt2 = "INSERT INTO chats (jobID) VALUES ({$jobID});";
 
 	if($update = mysqli_prepare($link, $stmt)) {
 		mysqli_stmt_execute($update);
+	}
+	if($insert = mysqli_prepare($link, $stmt2)) {
+		mysqli_stmt_execute($insert);
 	}
 	header("location: index.php");
 	mysqli_close($link);
