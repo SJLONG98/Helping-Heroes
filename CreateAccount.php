@@ -19,11 +19,9 @@
 		if(empty(trim($_POST["email"]))) {
 			$email_err = "Please enter an email.";
 		} else {
-			$sql = "SELECT * From user WHERE email = '?'";
+		    $param_email = trim($_POST["email"]);
+			$sql = "SELECT * From user WHERE email = '{$param_email}'";
 			if($stmt = mysqli_prepare($link, $sql)) {
-				mysqli_stmt_bind_param($stmt,"s",$param_email);
-				$param_email = trim($_POST["email"]);
-
 				if(mysqli_stmt_execute($stmt)) {
 					mysqli_stmt_store_result($stmt);
 
@@ -110,15 +108,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Helping Heroes: Account</title>
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+		<link rel="icon" href="images/Hlogo.ico" type="image/png">
 	</head>
 	<body>
-	
 		<?php 
 			// Necessary reference to include our dynamic navbar
 			include("Navbar.php");
 		?>
-
-		
 		<div class="container-fluid text-center">    
 			<div class="row content">
 				<div class="col-sm-2 sidenav"></div>
@@ -142,7 +138,7 @@
 						<div>
 							<label for="email">Email Address</label>
 							<br>
-							<input type="text" id="email" name="email" placeholder=" johnsmith1995@gmail.com">
+							<input type="email" id="email" name="email" placeholder=" johnsmith1995@gmail.com">
 							<?php if (empty($email_err)) { 
 									} else { ?>
 							<p><?php echo $email_err; ?></p>
@@ -162,7 +158,7 @@
 						<div>
 							<label for="password">Password</label>
 							<br>
-							<input type="text" id="password" name="password" placeholder="">
+							<input type="password" id="password" name="password" placeholder="">
 							<?php if (empty($uname_err)) { 
 									} else { ?>
 							<p><?php echo $password_err; ?></p>
@@ -172,7 +168,7 @@
 						<div>
 							<label for="confirmPassword">Confirm Password</label>
 							<br>
-							<input type="text" id="confirmPassword" name="confirmPassword" placeholder="">
+							<input type="password" id="confirmPassword" name="confirmPassword" placeholder="">
 							<?php if (empty($uname_err)) { 
 									} else { ?>
 							<p><?php echo $confirm_password_err; ?></p>
