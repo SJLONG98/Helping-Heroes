@@ -8,7 +8,7 @@
 	include("connection.php");
 	
 	// Sets up query for all users which have a pending vetted status
-	$getUsers = "SELECT * FROM user WHERE isVetted is null AND vettingFileName is not null";
+	$getUsers = "SELECT * FROM users WHERE isVetted is null AND vettingFileName is not null";
 	$result = mysqli_query($link, $getUsers);
 
 	if($_SERVER['REQUEST_METHOD'] == "POST") {

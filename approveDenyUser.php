@@ -20,7 +20,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 	
 	// Create mySQL statement to update the database
-	$stmt = "UPDATE user SET isVetted = \"{$approvalKey}\", vettingFileName = null WHERE userID = \"{$userID}\"";
+	$stmt = "UPDATE users SET isVetted = \"{$approvalKey}\", vettingFileName = null WHERE userID = \"{$userID}\"";
 
 	if($update = mysqli_prepare($link, $stmt)) {
 		mysqli_stmt_execute($update);

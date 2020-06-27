@@ -1,27 +1,3 @@
-
-<html>
-	<head>
-		<style>
-	.navbar-inverse .navbar-toggle {
-			border-color: gray;
-			color: black;
-			}
-	.navbar-toggle {
-    		background-color: gray;
-			}
-	.navbar-inverse .navbar-nav>li>a {
-    	color: black;
-			}
-	.navbar-inverse .navbar-nav > li > a:hover,
-	.navbar-inverse .navbar-nav > li > a:focus {
-		color: gray;
-		background-color: transparent;
-			}
-
-
-		</style>
-	</head>
-</html>
 <?php
 	// Session check and connection file inclusion
     if(!isset($_SESSION)) 
@@ -34,7 +10,7 @@
 	//  and log which type of user they are
 	if (isset($_SESSION['login_user'])){
 		
-		$sql = "SELECT userType, isVetted FROM user WHERE email = ?";
+		$sql = "SELECT userType, isVetted FROM users WHERE email = ?";
 
 		if($stmt = mysqli_prepare($link, $sql)) {
 			mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -65,10 +41,10 @@
 	}
 	
 ?>
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation" id="nav">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="index.php"> <img src="images/helpingheroes.png" alt="Logo" style="width:120px;"></a>
+			<a class="navbar-brand" href="index.php">Helping Heroes</a>
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
@@ -86,6 +62,7 @@
 				if (isset($_SESSION['userType'])) {
 				if($userType == "Admin") {} else if ($userType == "Volunteer" && $isVetted == 1) { ?> <li><a href="CreateRequest.php">Create Offer</a></li> <?php } elseif ($userType == "Key Worker" && $isVetted == 1) { ?> <li><a href="CreateRequest.php">Create Request</a></li> <?php };
 				if($userType == "Admin") { ?> <li><a href="Admin.php"><span class="logo_colour">Admin</span></a></li> <?php } else { ?> <li><a href="User.php">Profile</a></li>  <?php }; ?> 
+				<li><a href="Messages.php">Messages</a></li>
 				<li><a href="logout.php" onclick="callFunction(this.href);return false;">Logout</a></li> <?php
 				} else { ?>
 				<li><a href="CreateAccount.php">Login / Create Account</a></li>

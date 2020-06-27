@@ -9,7 +9,7 @@
 	if (isset($_SESSION['overlayCheck'])) {
 		$overlayCheck = $_SESSION['overlayCheck'];
 	} else {
-		$overlayCheck = "None";
+		$overlayCheck = "!!!This Site is a Univesity Project!!!";
 	}
 	
 
@@ -49,7 +49,7 @@
 	}
 
 	// Sets up query for all jobs which has the inverse type of the current user
-	$getJobs = "SELECT a.jobTitle, a.jobType, a.jobDescription, b.postcode, a.jobID FROM jobs a LEFT JOIN user b ON a.userID = b.userId WHERE a.pairedUserId is null AND a.isApproved is null AND a.userType in ({$otherType})";
+	$getJobs = "SELECT a.jobTitle, a.jobType, a.jobDescription, b.postcode, a.jobID FROM jobs a LEFT JOIN users b ON a.userID = b.userId WHERE a.pairedUserId is null AND a.isApproved is null AND a.userType in ({$otherType})";
 	$result = mysqli_query($link, $getJobs);
 ?>
 
@@ -63,13 +63,27 @@
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<link rel="icon" href="images/Hlogo.png" type="image/png" sizes="16x16">
+		<link rel="icon" href="#"/>
 		<title>Helping Heroes</title>
 	</head>
-	<body >
+	<body onload="on()">
+	    <div id="overlay" onclick="off()">
+			<div id="overlayText"><?php echo $overlayCheck; ?></div>
+		</div>
+		<script>	
+			function on() {
+				overlayCheck = "<?php echo $overlayCheck; ?>";
+				if (!(overlayCheck === "None")) {
+					document.getElementById("overlay").style.display = "block";
+				}
+			}
+
+			function off() {
+				document.getElementById("overlay").style.display = "none";
+			}
+		</script>
 		<?php 
 			// Necessary reference to include our dynamic navbar
-			include("overlay.php");
 			include("Navbar.php");
 		?>
 		<div class="container-fluid text-center">
@@ -88,25 +102,15 @@
 					</select>
 				</div>
 			</div>
-			<div>
-			<?php
-			if (isset($_GET["newpwd"])) {
-				if ($_GET["newpwd"] == "passwordUpdated") {
-					echo "your password has been changed";
-				}
-			}
-			?>
-			</div>
-			<div class="row content" >
+			<div class="row content">
 				<div class="col-sm-2 sidenav"></div>
 				<!-- This div contains the details for a list of all jobs
 						with limits on whether the user is signed in and
 						their user type -->
-				<div class="col-sm-8 text-center" id= >
+				<div class="col-sm-8 text-center">
 					<ul id="resultList" >
 						<?php $i=0; while(($row = mysqli_fetch_array($result)) && ($i<10)){ ?>
-						<li class="col-xs-6 col-sm-6 col-md-4 col-lg-4 jobItem" id=joblist>
-						<div class="card">
+						<li class="col-xs-6 col-sm-6 col-md-4 col-lg-4 jobItem">
 							<form action="JobDetails.php" method="post">
 								<button type="submit" name="jobID" value="<?php echo $row[4]; ?>" class="headerButton"><?php echo $row[0]; ?></button>
 								<p id="jobTypeText"><?php echo getJobType($row[1]); ?></p>
@@ -122,7 +126,6 @@
 							<?php } else { ?>
 								<a href="CreateAccount.php">Login/Register to claim</a>
 							<?php $i++; }; ?>
-							</div>
 						</li>
 						<?php }; ?>
 					</ul>

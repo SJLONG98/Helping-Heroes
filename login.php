@@ -29,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(empty($email_err) && empty($password_err)) {
 		
 		// Build script to be run in mySQL
-		$sql = "SELECT userID,email,password,userType FROM user WHERE email = ?";
+		$sql = "SELECT userID,email,password,userType FROM users WHERE email = ?";
 
 		if($stmt = mysqli_prepare($link, $sql)) {
 			mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -73,7 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		}
 	}
 	
-	header("location: CreateAccount.php");
+	header("location: index.php");
 	mysqli_close($link);
 }
 // Otherwise do nothing

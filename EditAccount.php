@@ -18,7 +18,7 @@
 	$status = "";
 	
 	// mySQL code run to get this user's current vetting status
-	$getStatus = "SELECT isVetted, vettingFileName, dob FROM user WHERE userID = \"{$userID}\"";
+	$getStatus = "SELECT isVetted, vettingFileName, dob FROM users WHERE userID = \"{$userID}\"";
 	$result = mysqli_query($link, $getStatus);
 	$row = mysqli_fetch_array($result);
 	if($row[0] == 0 && (!empty($row[0]))) {
@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	$postcode = trim($_POST["postcode"]);
 	$phoneNumber = trim($_POST["phoneNumber"]);
 	$dob = trim($_POST["dob"]);
-	$updateAccount = "UPDATE user SET";
+	$updateAccount = "UPDATE users SET";
 
 	if(!empty($address)) {$updateAccount .= " address = \"{$address}\",";};
 
@@ -61,12 +61,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if(!empty($dob)) {$updateAccount .= " dob = \"{$dob}\" ";}
 	
-	if($updateAccount != "UPDATE user SET") {
+	if($updateAccount != "UPDATE users SET") {
 		$updateAccount = substr($updateAccount ,0,-1);
 		$updateAccount .= " WHERE userID = \"{$userID}\"";
 	}
 
-	if(!empty($updateAccount) && !($updateAccount == "UPDATE user SET")) {
+	if(!empty($updateAccount) && !($updateAccount == "UPDATE users SET")) {
 
 		if($update = mysqli_prepare($link, $updateAccount)) {
 			if(mysqli_stmt_execute($update)) {
@@ -178,7 +178,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 					<!-- This div contains the current verified status of the user
 							as well as a form to upload a file to be used as verification.-->
 					<h2>Verified Status</h2>
-					<p>Please upload a pfd file to be vetted.</p>
+					<?php if ($hasUploaded == 0) {?> <p>Please upload a pfd file to be vetted.</p> <?php } else {?> <p>Your file is waiting to be reviewed.</p> <?php }; ?>
 					<h4><?php echo $status; ?></h4>
 					<?php if ($hasUploaded == 0 && $status != "Approved") {?>
 						<form action="uploadFile.php" method="post" enctype="multipart/form-data">

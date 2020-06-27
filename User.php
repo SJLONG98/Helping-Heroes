@@ -58,11 +58,11 @@
 	$resultDenied = mysqli_query($link, $getDeniedJobs);
 	
 	// Sets up query for all jobs the user has claimed
-	$getActiveJobs = "SELECT a.jobTitle, a.jobType, a.jobDescription, b.email, a.jobID FROM jobs a LEFT JOIN user b ON a.userID = b.userID WHERE a.pairedUserID = \"{$userID}\" AND isApproved = 1 UNION SELECT a.jobTitle, a.jobType, a.jobDescription, b.email, a.jobID FROM jobs a LEFT JOIN user b ON a.pairedUserID = b.userID WHERE a.userID = \"{$userID}\" AND isApproved = 1";
+	$getActiveJobs = "SELECT a.jobTitle, a.jobType, a.jobDescription, b.email, a.jobID FROM jobs a LEFT JOIN users b ON a.userID = b.userID WHERE a.pairedUserID = \"{$userID}\" AND isApproved = 1 UNION SELECT a.jobTitle, a.jobType, a.jobDescription, b.email, a.jobID FROM jobs a LEFT JOIN users b ON a.pairedUserID = b.userID WHERE a.userID = \"{$userID}\" AND isApproved = 1";
 	$resultActive = mysqli_query($link, $getActiveJobs);
 	
 	// Sets up query for all the user details
-	$getUserDetails = "SELECT * FROM user WHERE userID = \"{$userID}\"";
+	$getUserDetails = "SELECT * FROM users WHERE userID = \"{$userID}\"";
 	$resultUser = mysqli_query($link, $getUserDetails);
 	
 ?>
