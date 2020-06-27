@@ -157,7 +157,7 @@
 						<div>
 							<label for="password">Password</label>
 							<br>
-							<input type="text" id="password" name="password" placeholder="">
+							<input type="password" id="password" name="password" placeholder="">
 							<?php if (empty($uname_err)) { 
 									} else { ?>
 							<p><?php echo $password_err; ?></p>
@@ -167,7 +167,7 @@
 						<div>
 							<label for="confirmPassword">Confirm Password</label>
 							<br>
-							<input type="text" id="confirmPassword" name="confirmPassword" placeholder="">
+							<input type="password" id="confirmPassword" name="confirmPassword" placeholder="">
 							<?php if (empty($uname_err)) { 
 									} else { ?>
 							<p><?php echo $confirm_password_err; ?></p>
