@@ -19,7 +19,7 @@
 		if(empty(trim($_POST["email"]))) {
 			$email_err = "Please enter an email.";
 		} else {
-		    $param_email = trim($_POST["email"]);
+			$param_email = trim($_POST["email"]);
 			$sql = "SELECT * From user WHERE email = '{$param_email}'";
 			if($stmt = mysqli_prepare($link, $sql)) {
 				if(mysqli_stmt_execute($stmt)) {
@@ -74,7 +74,7 @@
 		}
 
 		if(empty($userID_err) && empty($email_err) && empty($userType_err) && empty($password_err) && empty($confirm_password_err) && empty($secQuestion_err) && empty($secAnswer_err)) {
-			$addUser = "INSERT INTO user (userID, email, password, userType, secQuestion, secAnswer) VALUES (?, ?, ?, ?, ?, ?)";
+			$addUser = "INSERT INTO users (userID, email, password, userType, secQuestion, secAnswer) VALUES (?, ?, ?, ?, ?, ?)";
 
 			if($add = mysqli_prepare($link, $addUser)) {
 				mysqli_stmt_bind_param($add, "ssssss", $param_userID, $param_email, $param_password, $param_userType, $param_secQuestion, $param_secAnswer);
@@ -108,7 +108,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Helping Heroes: Account</title>
 		<meta http-equiv="content-type" content="text/html; charset=windows-1252" />
-		<link rel="icon" href="images/Hlogo.ico" type="image/png">
 	</head>
 	<body>
 		<?php 
@@ -158,7 +157,7 @@
 						<div>
 							<label for="password">Password</label>
 							<br>
-							<input type="password" id="password" name="password" placeholder="">
+							<input type="text" id="password" name="password" placeholder="">
 							<?php if (empty($uname_err)) { 
 									} else { ?>
 							<p><?php echo $password_err; ?></p>
@@ -168,7 +167,7 @@
 						<div>
 							<label for="confirmPassword">Confirm Password</label>
 							<br>
-							<input type="password" id="confirmPassword" name="confirmPassword" placeholder="">
+							<input type="text" id="confirmPassword" name="confirmPassword" placeholder="">
 							<?php if (empty($uname_err)) { 
 									} else { ?>
 							<p><?php echo $confirm_password_err; ?></p>
@@ -222,12 +221,10 @@
 								<p> <?php echo str_replace('+',' ',$_SESSION['Message']);?> </p>
 							<?php unset($_SESSION['Message']); } ?>
 						</div>
-						<a href="PasswordReset.php" >Reset your password</a>
-						<div></div>
 
 						<input type="submit" name="submit" value="Login" id="login" onclick="loginFunction()">
 					</form>
-				
+					<a href="PasswordReset.php" >
 				</div>
 				<div class="col-sm-2 sidenav"></div>
 			</div>
