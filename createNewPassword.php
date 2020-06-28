@@ -41,11 +41,11 @@
                 } else {
                     if (ctype_xdigit($selector) !== false && ctype_xdigit($validator) !== false ) {       
                 ?>
-
+<!-- places the validator and selectoras hidden atrtributes to then be able to varify the user is able to change the password -->
                 <form action="resetPassword.php" method="post">
                 <input type="hidden" name="selector" value="<?php echo $selector ?>">
                 <input type="hidden" name="validator" value="<?php echo $validator ?>">
-                <input type="password" name="pwd" placeholder="Enter a new ppassword">
+                <input type="password" name="pwd" placeholder="Enter a new password">
                 <input type="passwordRepeat" name="pwdRepeat" placeholder="Repeat new password">
                 <button type="submit" name="ResetPasswordSubmit"> Reset password </button>
                 

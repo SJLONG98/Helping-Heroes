@@ -49,7 +49,7 @@ if (isset($_POST["ResetPassword"])) {
     $subject = 'Reset your Helping Heroes Password';
 
     $message = '<p>We received a request to reset your HelpingHeroes.com account password.  If you didn’t make the request, you can ignore this email. Otherwise, click the link below to change your password.</p>';
-    $message .= '<p> Here is your poassword Reset Link: </br>';
+    $message .= '<p> Here is your password Reset Link: </br>';
     $message .='<a href="' . $url . '">' . $url . '</a></p>';
 
     $headers = "From: Adam <noreply@helpingheroes.co.uk>\r\n";
